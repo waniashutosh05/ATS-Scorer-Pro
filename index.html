@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Scorer Pro</title>
+    <meta name="description" content="A premium ATS resume scoring tool.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Include PDF.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar glass-panel">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                <span>ATS Scorer Pro</span>
+            </div>
+            <div class="user-info">
+                <span class="user-name">Ashutosh Wani</span>
+                <span class="user-email">waniashutosh05@gmail.com</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="hero">
+                <h1 class="gradient-text">Optimize Your Resume</h1>
+                <p>Paste your job description and upload your resume to discover your ATS match score instantly.</p>
+            </header>
+
+            <section class="input-section">
+                <div class="input-card glass-panel flex-col">
+                    <div class="resume-header">
+                        <label>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Job Description
+                        </label>
+                        <div class="tabs">
+                            <button class="tab-btn" data-target="jd-upload-area">Upload PDF</button>
+                            <button class="tab-btn active" data-target="job-description">Paste Text</button>
+                        </div>
+                    </div>
+                    
+                    <textarea id="job-description" class="tab-content active" placeholder="Paste the target job description here..."></textarea>
+                    
+                    <div id="jd-upload-area" class="tab-content upload-area">
+                        <input type="file" id="jd-pdf-upload" accept="application/pdf" hidden>
+                        <label for="jd-pdf-upload" class="upload-label">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span id="jd-upload-text">Click to browse or drag PDF here</span>
+                            <span id="jd-file-name" class="file-name"></span>
+                        </label>
+                        <div id="jd-pdf-loading" class="pdf-loading hidden">
+                            <div class="spinner"></div>
+                            <span>Extracting text from PDF...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-card glass-panel flex-col">
+                    <div class="resume-header">
+                        <label>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Your Resume
+                        </label>
+                        <div class="tabs">
+                            <button class="tab-btn" data-target="upload-area">Upload PDF</button>
+                            <button class="tab-btn active" data-target="resume-text">Paste Text</button>
+                        </div>
+                    </div>
+                    
+                    <textarea id="resume-text" class="tab-content active" placeholder="Paste your resume text here..."></textarea>
+                    
+                    <div id="upload-area" class="tab-content upload-area">
+                        <input type="file" id="pdf-upload" accept="application/pdf" hidden>
+                        <label for="pdf-upload" class="upload-label">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span id="upload-text">Click to browse or drag PDF here</span>
+                            <span id="file-name" class="file-name"></span>
+                        </label>
+                        <div id="pdf-loading" class="pdf-loading hidden">
+                            <div class="spinner"></div>
+                            <span>Extracting text from PDF...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-container">
+                <button id="score-btn" class="primary-btn">
+                    <span>Analyze Match</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+
+            <!-- Results Section (Hidden initially) -->
+            <section id="results-section" class="results-section hidden glass-panel">
+                <div class="score-container">
+                    <div class="circular-progress">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <circle class="progress-ring__circle" stroke="url(#gradient)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#8a2be2" />
+                                    <stop offset="100%" stop-color="#4169e1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="score-value">
+                            <span id="score-number">0</span>%
+                        </div>
+                    </div>
+                    <div class="score-text">
+                        <h2 id="score-title">Match Score</h2>
+                        <p id="score-subtitle">A higher score means better ATS compatibility.</p>
+                    </div>
+                </div>
+
+                <div class="keywords-analysis">
+                    <div class="keyword-group">
+                        <h3><span class="status-dot success"></span> Matched Keywords (<span id="matched-count">0</span>)</h3>
+                        <div id="matched-keywords" class="keyword-tags"></div>
+                    </div>
+                    <div class="keyword-group">
+                        <h3><span class="status-dot error"></span> Missing Keywords (<span id="missing-count">0</span>)</h3>
+                        <div id="missing-keywords" class="keyword-tags"></div>
+                    </div>
+                </div>
+
+                <div class="advice-section glass-panel">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #fbbf24; margin-right: 8px; margin-bottom: 2px;"><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path><circle cx="12" cy="12" r="4"></circle></svg>Actionable Advice</h3>
+                    <ul id="advice-list" class="advice-list">
+                        <!-- Dynamic advice will be injected here -->
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <a href="https://digitalheroesco.com" target="_blank" rel="noopener noreferrer" class="digital-heroes-btn">
+                Built for Digital Heroes
+            </a>
+            <div class="footer-info">
+                <span>Created by Ashutosh Wani</span> | <span>waniashutosh05@gmail.com</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
