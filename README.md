@@ -4,8 +4,6 @@ A premium, purely client-side Applicant Tracking System (ATS) Scorer designed to
 
 Built with an emphasis on **privacy, speed, and modern UI/UX**, this tool processes everything directly in your browser—no backend servers, no data collection.
 
-![ATS Scorer Preview](https://via.placeholder.com/800x400.png?text=ATS+Scorer+Pro+-+Dark+Mode+UI)
-
 ## ✨ Features
 
 - **In-Browser PDF Parsing**: Upload your resume as a PDF and watch the offline `pdf.js` engine instantly extract your text. 
